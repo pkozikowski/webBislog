@@ -1,26 +1,14 @@
 with customers as (
 
-    select
-        id as customer_id,
-        first_name,
-        last_name
+    select * from {{ ref('stg_customers') }}
 
-    from raw.jaffle_shop.customers
+)
 
-),
+,orders as (
 
-orders as (
-
-    select
-        id as order_id,
-        user_id as customer_id,
-        order_date,
-        status
-
-    from raw.jaffle_shop.orders
-
-),
-
+    select * from {{ ref('stg_orders') }}
+)
+,
 customer_orders as (
 
     select
@@ -35,6 +23,7 @@ customer_orders as (
     group by 1
 
 ),
+
 
 final as (
 
